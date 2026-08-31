@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: mission-anomaly-copilot-backend
+    env: python
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PORT
+        value: 8000
+      # Fallback mode - no AI service required for judge evaluation
+      - key: USE_OLLAMA
+        value: "false"
+      - key: WATSONX_API_KEY
+        value: ""
+      - key: WATSONX_PROJECT_ID
+        value: ""
+      - key: WATSONX_URL
+        value: https://us-south.ml.cloud.ibm.com
+      - key: GRANITE_MODEL_ID
+        value: ibm/granite-3-1-8b-instruct
+      - key: GRANITE_EMBEDDING_MODEL
+        value: ibm/granite-embedding-30m-english
+      - key: CORS_ORIGINS
+        value: "*"
+    healthCheckPath: /health

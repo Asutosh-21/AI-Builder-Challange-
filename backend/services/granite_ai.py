@@ -1,6 +1,6 @@
 """
 IBM Granite AI Service
-Root cause explanation + mission response plan generation via watsonx.ai.
+Root cause explanation + mission response plan generation via Ollama or watsonx.ai.
 """
 from __future__ import annotations
 
@@ -14,10 +14,18 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
+# Ollama Configuration
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "granite")
+
+# IBM Watson Configuration (fallback)
 WATSONX_API_KEY = os.getenv("WATSONX_API_KEY", "")
 WATSONX_PROJECT_ID = os.getenv("WATSONX_PROJECT_ID", "")
 WATSONX_URL = os.getenv("WATSONX_URL", "https://us-south.ml.cloud.ibm.com")
 GRANITE_MODEL_ID = os.getenv("GRANITE_MODEL_ID", "ibm/granite-3-1-8b-instruct")
+
+# Use Ollama if available, otherwise fall back to Watson
+USE_OLLAMA = os.getenv("USE_OLLAMA", "true").lower() == "true"
 
 # Normal ranges for human-readable prompt context
 NORMAL_RANGES_TEXT = {
@@ -63,11 +71,28 @@ Write as a structured narrative paragraph followed by a numbered checklist."""
 
 
 def _get_llm():
-    """Lazy-init WatsonxLLM."""
+    """Lazy-init LLM - tries Ollama first, falls back to Watsonx."""
+    if USE_OLLAMA:
+        try:
+            from langchain_community.llms import Ollama
+            logger.info(f"Using Ollama at {OLLAMA_BASE_URL} with model {OLLAMA_MODEL}")
+            return Ollama(
+                base_url=OLLAMA_BASE_URL,
+                model=OLLAMA_MODEL,
+                temperature=0.3,
+                num_predict=450,
+            )
+        except Exception as exc:
+            logger.warning("Ollama init failed: %s", exc)
+            # Fall through to Watsonx
+
+    # Watsonx fallback
     if not WATSONX_API_KEY or not WATSONX_PROJECT_ID:
+        logger.warning("No valid LLM configuration found (Ollama failed, Watsonx credentials missing)")
         return None
     try:
         from langchain_ibm import WatsonxLLM
+        logger.info(f"Using Watsonx with model {GRANITE_MODEL_ID}")
         return WatsonxLLM(
             model_id=GRANITE_MODEL_ID,
             url=WATSONX_URL,
