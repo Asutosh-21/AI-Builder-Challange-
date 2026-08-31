@@ -1,0 +1,63 @@
+## Cassini-Huygens Power Anomaly (1999)
+
+During the Cassini spacecraft's Venus flyby in April 1999, the spacecraft experienced an unexpected power bus voltage drop from 30V to 26.8V over 45 minutes. The anomaly was traced to the activation of a secondary heater circuit that had been inadvertently left in a configuration that drew excess current. The power budget model did not account for the heater's activation at Venus periapsis due to the elevated thermal environment. Engineers at JPL identified the root cause within 3 hours using telemetry replay analysis. The spacecraft was commanded to disable the surplus heater, restoring nominal bus voltage. This incident highlighted the importance of thermal-electrical interaction modeling for planetary flyby scenarios. Post-event analysis led to a complete review of all heater circuit activation logic for the Saturn phase.
+
+---
+
+## Mars Reconnaissance Orbiter Unexpected Reset (2009)
+
+NASA's Mars Reconnaissance Orbiter (MRO) experienced four unexpected computer resets between August and September 2009 due to a software anomaly in the onboard fault protection system. The fault protection algorithm was over-aggressively detecting false positives during a period of high solar activity, triggering safe mode entries that interrupted science operations. The spacecraft's solid-state recorder correctly safeguarded mission data during each reset. Engineers diagnosed the issue through extensive telemetry comparison with earlier safe-mode events and identified a threshold parameter in the fault detection algorithm that required adjustment. The fix was uploaded as a software patch within three weeks. This event demonstrated the importance of radiation environment modeling for fault protection threshold calibration.
+
+---
+
+## Deep Space 1 Ion Engine Failure (1999)
+
+NASA's Deep Space 1 spacecraft suffered a catastrophic failure of its primary star tracker in November 1999, which was the primary attitude reference sensor for the novel ion propulsion system. Without the star tracker, the spacecraft could not autonomously maintain ion engine pointing toward the Sun, and the entire mission was at risk of loss. The engineering team at JPL improvised a solution over two weeks, using the ion engine exhaust pattern as a crude attitude reference and developing new ground-commanded attitude maneuver sequences. The backup star tracker was successfully activated after a complex recovery sequence. This anomaly led to a fundamental redesign of attitude determination architecture for future deep space missions, requiring independent redundant attitude sources for primary propulsion systems.
+
+---
+
+## Galileo Spacecraft High-Gain Antenna Deployment Failure (1991)
+
+The Galileo spacecraft's high-gain antenna (HGA) failed to fully deploy after launch in 1991, reducing communications bandwidth by a factor of 100,000 compared to design. Engineers determined that three of the 18 antenna ribs had stuck in the furled position, likely due to lubricant loss during the spacecraft's extended storage before launch in a facility with elevated humidity. Extensive attempts to free the ribs using thermal cycling and repeated deployment command sequences spanning three years ultimately failed to achieve full deployment. The mission team redesigned the entire data return strategy around the low-gain antenna, developing advanced data compression algorithms and prioritizing the highest-value science data. Despite this severe constraint, the mission returned 70% of its planned science objectives. This anomaly shaped NASA's storage environment standards and HGA qualification testing protocols for all subsequent deep space missions.
+
+---
+
+## WIRE Spacecraft Premature Cover Ejection (1999)
+
+NASA's Wide-Field Infrared Explorer (WIRE) mission failed 10 seconds after its ejection from the launch vehicle in March 1999 when a software error caused the protective cover over the primary telescope to eject prematurely. The telescope was designed to operate at cryogenic temperatures maintained by a solid hydrogen cryostat. Direct solar illumination of the exposed telescope caused the hydrogen to rapidly sublimate, spinning up the spacecraft to over 60 RPM — far beyond its structural and attitude control design limits. The spacecraft's attitude control system was overwhelmed and science operations were never achieved. Post-failure analysis identified a one-byte software error in the ejection logic that allowed the cover to release before the spacecraft's cover heater had been commanded to its safe state. This event became a landmark case study in software verification for irreversible commands.
+
+---
+
+## Chandra X-ray Observatory Battery Anomaly (2018)
+
+NASA's Chandra X-ray Observatory entered safe mode on October 10, 2018, when one of its gyroscopes reported faulty data, causing the onboard fault protection system to place the spacecraft in safe mode. The gyroscope was producing erroneous velocity readings due to a software issue in the angle transfer buffer. Engineers at the Operations Control Center spent 3 weeks analyzing telemetry before identifying the root cause: accumulated rounding errors in a coordinate transformation calculation that had been building up over 19 years of operation. The affected gyroscope was taken out of the attitude determination solution, and Chandra resumed science operations in reduced configuration. This event demonstrated that long-lived missions must actively monitor for slowly accumulating numerical errors in onboard software.
+
+---
+
+## Hubble Space Telescope Gyroscope Failures (2018-2024)
+
+NASA's Hubble Space Telescope has experienced multiple gyroscope failures throughout its 34-year mission. The most recent significant event in November 2023 saw one of the remaining three operational gyroscopes enter a fault mode, producing erroneously high rotation rate readings of over 40 times the actual spacecraft rotation. NASA engineers spent six weeks attempting standard reset procedures, including power cycling and parameter adjustments, before the gyroscope returned to nominal operation. Engineers determined the gyroscope had entered a fault mode due to a stuck valve in its micro-thruster, producing a false high-rate reading. A software patch was developed to allow Hubble to continue science in a single-gyroscope mode as a contingency measure. This approach extended Hubble's operational life significantly beyond its original design.
+
+---
+
+## GRACE-FO Accelerometer Heater Anomaly (2018)
+
+The Gravity Recovery and Climate Experiment Follow-On (GRACE-FO) spacecraft experienced an accelerometer thermal anomaly in 2018 when a heater control circuit on one of the two satellites experienced an open-circuit failure, causing the accelerometer housing temperature to drop 8°C below its operational specification. Accelerometers in gravity mapping missions must maintain extremely precise temperature stability (±0.01°C) to produce accurate measurements. The anomaly caused a 72-hour gap in scientific data collection while the backup heater circuit was activated and thermal stability was reestablished. Engineers analyzed 6 months of heater current telemetry and identified early signs of the circuit degradation that could have enabled an earlier intervention. This event improved heater circuit monitoring algorithms across the GRACE-FO mission.
+
+---
+
+## Opportunity Rover Memory Flash Anomaly (2014)
+
+NASA's Mars Exploration Rover Opportunity experienced an anomaly in 2014 when its flash memory file system developed errors in the Bank 7 memory module, causing the rover to repeatedly reboot into a fault protection mode. Engineers at JPL identified that the specific flash memory module had reached its operational write limit after 10 years of use. The solution was to reformat the file system to exclude Bank 7 from all write operations, effectively working around the degraded memory bank. This procedure required developing new file system management software and uplinking it to the rover over the Mars-Earth communication link. Opportunity resumed normal operations after a 7-week recovery period. This anomaly led to improved flash memory wear-leveling algorithms in future Mars surface missions.
+
+---
+
+## Voyager 1 Attitude Thrusters Reactivation (2024)
+
+NASA's Voyager 1 spacecraft, now over 24 billion kilometers from Earth, experienced a communication anomaly in November 2023 when the Flight Data System (FDS) chip began sending garbled science and engineering data, while still responding to commands from Earth. Engineers spent five months systematically testing each memory chip in the FDS and identified that a single chip responsible for storing a portion of the FDS memory had degraded. Since the chip couldn't be repaired, engineers devised a plan to store the affected code and data in other areas of the FDS memory — albeit in fragmented form — and to update all pointers to the new locations. By May 2024, Voyager 1 was again returning usable science data. This repair was conducted with a 22.5-hour one-way signal delay, requiring each test to span 45 hours of waiting for round-trip confirmation.
+
+---
+
+## James Webb Space Telescope Micrometeorite Impact (2022)
+
+In May and June 2022, NASA's James Webb Space Telescope experienced multiple micrometeorite strikes on its primary mirror, including one impact on mirror segment C3 that was larger than any impact that had been modeled during the pre-launch performance testing campaign. The impact caused a small deviation in the mirror segment's shape that produced a detectable but small effect on image quality. Webb's mirror segments are designed to be adjusted to correct for such impacts using their actuator systems. Engineers used wavefront sensing measurements to characterize the impact damage and developed a correction procedure to partially compensate for the mirror distortion. The telescope continues to operate with full science capability. Webb's mirror design philosophy — using 18 individually adjustable mirror segments — proved its value in enabling continued operations despite micrometeorite damage beyond design specification.
